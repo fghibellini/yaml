@@ -842,7 +842,7 @@ runEmitter opts allocI closeI =
 
 -- | The pointer position
 data YamlMark = YamlMark { yamlIndex :: Int, yamlLine :: Int, yamlColumn :: Int }
-    deriving Show
+    deriving (Show, Eq, Ord)
 
 data YamlException = YamlException String
                    -- | problem, context, index, position line, position column
