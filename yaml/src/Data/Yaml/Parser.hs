@@ -208,5 +208,8 @@ sinkValue =
 sinkRawDoc :: MonadThrow m => ConduitM MarkedEvent o m RawDoc
 sinkRawDoc = uncurry RawDoc <$> runWriterC sinkValue
 
+readYamlBS :: ByteString -> IO MarkedYamlValue
+readYamlBS bs = runConduitRes (decodeMarked bs .| sinkRawDoc) >>= (\(RawDoc val _) -> pure val)
+
 readYamlFile :: FilePath -> IO MarkedYamlValue
 readYamlFile fp = runConduitRes (decodeFileMarked fp .| sinkRawDoc) >>= (\(RawDoc val _) -> pure val)
